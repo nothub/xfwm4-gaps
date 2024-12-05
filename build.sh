@@ -17,7 +17,7 @@ set -eu
 )
 
 sudo apt update
-sudo apt install devscripts build-essential fakeroot quilt
+sudo apt install -y devscripts build-essential fakeroot quilt libxpresent-dev
 
 apt source "xfwm4=${ver}"
 
