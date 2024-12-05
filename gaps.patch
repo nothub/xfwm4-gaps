@@ -1,10 +1,10 @@
 # original patch diff taken from:
 # https://gitlab.xfce.org/xfce/xfwm4/-/issues/707
 # https://gitlab.xfce.org/-/project/19/uploads/fcff75bac9f0322ca344a01e802f07f4/git-clone.diff
-diff --git a/defaults/defaults b/defaults/defaults
-index 83e873ff6..b44afac5d 100644
---- a/defaults/defaults
-+++ b/defaults/defaults
+Index: xfwm4-4.18.0/defaults/defaults
+===================================================================
+--- xfwm4-4.18.0.orig/defaults/defaults
++++ xfwm4-4.18.0/defaults/defaults
 @@ -25,6 +25,8 @@ focus_new=true
  frame_border_top=0
  frame_opacity=100
@@ -22,10 +22,10 @@ index 83e873ff6..b44afac5d 100644
  title_alignment=center
  title_font=Sans Bold 9
  title_horizontal_offset=0
-diff --git a/src/client.c b/src/client.c
-index 0b9c55668..656dbd122 100644
---- a/src/client.c
-+++ b/src/client.c
+Index: xfwm4-4.18.0/src/client.c
+===================================================================
+--- xfwm4-4.18.0.orig/src/client.c
++++ xfwm4-4.18.0/src/client.c
 @@ -3296,58 +3296,65 @@ static gboolean
  clientNewTileSize (Client *c, XWindowChanges *wc, GdkRectangle *rect, tilePositionType tile)
  {
@@ -124,11 +124,11 @@ index 0b9c55668..656dbd122 100644
              break;
          default:
              break;
-diff --git a/src/settings.c b/src/settings.c
-index 8fa35cde5..728a91a2a 100644
---- a/src/settings.c
-+++ b/src/settings.c
-@@ -549,6 +549,13 @@ loadTheme (ScreenInfo *screen_info, Settings *rc)
+Index: xfwm4-4.18.0/src/settings.c
+===================================================================
+--- xfwm4-4.18.0.orig/src/settings.c
++++ xfwm4-4.18.0/src/settings.c
+@@ -549,6 +549,13 @@ loadTheme (ScreenInfo *screen_info, Sett
      screen_info->params->title_horizontal_offset =
          getIntValue ("title_horizontal_offset", rc);
 
@@ -146,8 +146,8 @@ index 8fa35cde5..728a91a2a 100644
          {"frame_opacity", NULL, G_TYPE_INT, TRUE},
          {"frame_border_top", NULL, G_TYPE_INT, TRUE},
          {"full_width_title", NULL, G_TYPE_BOOLEAN, TRUE},
-+	{"gaps_inner", NULL, G_TYPE_INT, TRUE},
-+	{"gaps_outer", NULL, G_TYPE_INT, TRUE},
++        {"gaps_inner", NULL, G_TYPE_INT, TRUE},
++        {"gaps_outer", NULL, G_TYPE_INT, TRUE},
          {"horiz_scroll_opacity", NULL, G_TYPE_BOOLEAN, FALSE},
          {"inactive_opacity", NULL, G_TYPE_INT, TRUE},
          {"margin_bottom", NULL, G_TYPE_INT, FALSE},
@@ -155,14 +155,14 @@ index 8fa35cde5..728a91a2a 100644
          {"vblank_mode", NULL, G_TYPE_STRING, FALSE},
          {"theme", NULL, G_TYPE_STRING, TRUE},
          {"tile_on_move", NULL, G_TYPE_BOOLEAN, TRUE},
-+	{"tile_ratio", NULL, G_TYPE_INT, TRUE},
++        {"tile_ratio", NULL, G_TYPE_INT, TRUE},
          {"title_alignment", NULL, G_TYPE_STRING, TRUE},
          {"title_font", NULL, G_TYPE_STRING, FALSE},
          {"title_horizontal_offset", NULL, G_TYPE_INT, TRUE},
-diff --git a/src/settings.h b/src/settings.h
-index 612ee2e8a..e313730dd 100644
---- a/src/settings.h
-+++ b/src/settings.h
+Index: xfwm4-4.18.0/src/settings.h
+===================================================================
+--- xfwm4-4.18.0.orig/src/settings.h
++++ xfwm4-4.18.0/src/settings.h
 @@ -190,6 +190,8 @@ struct _XfwmParams
      int focus_delay;
      int frame_opacity;
