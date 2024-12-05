@@ -7,10 +7,10 @@ set -eu
 (
     # shellcheck disable=SC1091
     . /etc/os-release
-    case "${ID}-${VERSION_CODENAME}-${VERSION_ID}" in
-        "debian-bookworm-12") ;;
+    case "${ID}-${VERSION_ID}" in
+        "debian-12") ;;
         *)
-            echo >&2 "dumm"
+            echo >&2 "not supported: ${ID} ${VERSION_ID} (${VERSION_CODENAME})"
             exit 1
             ;;
     esac
