@@ -2,7 +2,7 @@
 
 ver="4.18.0"
 
-set -eu
+set -eux
 
 apt-get source "xfwm4=${ver}"
 
