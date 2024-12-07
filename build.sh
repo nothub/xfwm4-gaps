@@ -4,7 +4,7 @@ ver="4.18.0"
 
 set -eu
 
-apt source "xfwm4=${ver}"
+apt-get source "xfwm4=${ver}"
 
 mkdir -p "xfwm4-${ver}/debian/patches"
 cp gaps.patch "xfwm4-${ver}/debian/patches/"
