@@ -2,7 +2,9 @@
 
 ver="4.18.0"
 
-set -eux
+set -eu
+cd "$(dirname "$(realpath "$0")")"
+set -x
 
 apt-get source "xfwm4=${ver}"
 
