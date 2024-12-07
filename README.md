@@ -2,10 +2,15 @@ This builds a xfwm4 .deb package for Debian 12 with a [gaps patch by Joel Carnat
 
 ---
 
-Install build deps:
+Install build tools:
 ```
 sudo apt update
-sudo apt install -y devscripts build-essential fakeroot quilt libxpresent-dev
+sudo apt install -y \
+  build-essential \
+  devscripts \
+  fakeroot \
+  quilt \
+  xfce4-dev-tools
 ```
 
 Build .deb package:

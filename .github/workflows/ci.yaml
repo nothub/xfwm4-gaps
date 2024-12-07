@@ -26,7 +26,12 @@ jobs:
       - name: Install build tools
         run: |
           apt update
-          apt install -y devscripts build-essential fakeroot quilt libxpresent-dev
+          apt install -y \
+            build-essential \
+            devscripts \
+            fakeroot \
+            quilt \
+            xfce4-dev-tools
 
       - name: Build package
         run: |
