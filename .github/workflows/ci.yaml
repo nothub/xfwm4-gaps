@@ -61,8 +61,12 @@ jobs:
           cd dist
           sha256sum * > checksums.txt
 
-      - name: Upload release
+      - name: Find release name
+        run: echo "XFWM_VERSION=$(cat build.sh | grep -oP 'ver="(\K[0-9\.]+)')" >> $GITHUB_ENV
+
+      - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          name: '${{ github.sha }}'
+          name: '${{ env.XFWM_VERSION }}'
+          body: 'xfwm v${{ env.XFWM_VERSION }} (Debian 12)'
           files: 'dist/*'
