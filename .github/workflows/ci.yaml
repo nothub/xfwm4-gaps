@@ -1,0 +1,42 @@
+name: '🧑‍🏭'
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: write
+
+jobs:
+  job:
+    runs-on: ubuntu-24.04
+    container:
+      image: debian:12-slim
+    steps:
+
+      - name: Checkout Git
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install build tools
+        run: |
+          apt update
+          apt install -y devscripts build-essential fakeroot quilt libxpresent-dev
+
+      - name: Build package
+        run: |
+          ./build.sh
+          mkdir -p dist
+          mv xfwm4_*_amd64.deb dist/
+
+      - name: Create checksums
+        run: |
+          cd dist
+          sha256sum * > checksums.txt
+
+      - name: Upload release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: '${{ github.sha }}'
+          files: 'dist/*'

@@ -1,14 +1,24 @@
 This builds a xfwm4 .deb package for Debian 12 with a [gaps patch by Joel Carnat](https://gitlab.xfce.org/xfce/xfwm4/-/issues/707).
 
-Build (and install build deps) with:
+---
+
+Install build deps:
+```
+sudo apt update
+sudo apt install -y devscripts build-essential fakeroot quilt libxpresent-dev
+```
+
+Build .deb package:
 ```
 ./build.sh
 ```
 
-Install .deb package with:
+Install .deb package:
 ```
-sudo apt install --reinstall ./xfwm4_4.18.0-1_amd64.deb
+sudo apt install --reinstall ./xfwm4_*_amd64.deb
 ```
+
+---
 
 This patch adds 3 options:
   - `gaps_inner` (`int`)
