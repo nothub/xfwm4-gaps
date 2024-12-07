@@ -19,6 +19,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Enable apt source packages
+        run: |
+          sed -i 's/^Types: deb.*/Types: deb deb-src/g' /etc/apt/sources.list.d/debian.sources
+
       - name: Install build tools
         run: |
           apt update
