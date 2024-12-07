@@ -1,8 +1,6 @@
 name: '🧑‍🏭'
 on:
   push:
-    branches:
-      - main
     tags:
       - '*'
 permissions:
