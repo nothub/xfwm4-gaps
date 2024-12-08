@@ -106,7 +106,7 @@ jobs:
     needs: init
     runs-on: ubuntu-24.04
     container:
-      image: ubuntu-24.04
+      image: ubuntu:24.04
     steps:
 
       - name: Checkout Git
