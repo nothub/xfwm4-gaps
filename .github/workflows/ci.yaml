@@ -39,7 +39,7 @@ jobs:
         with:
           name: '${{ env.XFWM_VERSION }}'
           tag_name: '${{ env.RELEASE_TAG }}'
-          body: 'xfwm v${{ env.XFWM_VERSION }} (Debian 12)'
+          body: 'xfwm v${{ env.XFWM_VERSION }}'
 
   debian:
     needs: init
