@@ -10,6 +10,8 @@ jobs:
 
   init:
     runs-on: ubuntu-24.04
+    outputs:
+      release-tag: ${{ steps.find-release-tag.outputs.RELEASE_TAG }}
     steps:
 
       - name: Checkout Git
@@ -18,7 +20,11 @@ jobs:
           fetch-depth: 0
 
       - name: Find release tag
-        run: echo "RELEASE_TAG=$(date +%s)" >> $GITHUB_ENV
+        id: find-release-tag
+        run: |
+          tag="$(date +%s)"
+          echo "RELEASE_TAG=${tag}" >> $GITHUB_ENV
+          echo "RELEASE_TAG=${tag}" >> $GITHUB_OUTPUT
 
       - name: Create release tag
         uses: actions/github-script@v5
@@ -93,5 +99,5 @@ jobs:
       - name: Publish package
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: '${{ env.RELEASE_TAG }}'
+          tag_name: '${{ needs.init.outputs.release-tag }}'
           files: 'dist/*'
