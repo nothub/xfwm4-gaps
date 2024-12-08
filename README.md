@@ -1,4 +1,4 @@
-This builds a xfwm4 .deb package for Debian 12 with a [gaps patch by Joel Carnat](https://gitlab.xfce.org/xfce/xfwm4/-/issues/707).
+This builds xfwm4 .deb packages with a [gaps patch by Joel Carnat](https://gitlab.xfce.org/xfce/xfwm4/-/issues/707).
 
 ---
 
