@@ -88,7 +88,7 @@ jobs:
           ./build.sh
           mkdir -p dist
           file="$(find * -type f -name 'xfwm4_*_amd64.deb')"
-          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_debian_amd64/')"
+          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_debian-12_amd64/')"
 
       - name: Publish package
         uses: softprops/action-gh-release@v2
