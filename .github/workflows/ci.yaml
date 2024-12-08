@@ -47,7 +47,7 @@ jobs:
           tag_name: '${{ env.RELEASE_TAG }}'
           body: 'xfwm v${{ env.XFWM_VERSION }}'
 
-  debian:
+  debian-12:
     needs: init
     runs-on: ubuntu-24.04
     container:
@@ -95,6 +95,62 @@ jobs:
           mkdir -p dist
           file="$(find * -type f -name 'xfwm4_*_amd64.deb')"
           cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_debian-12_amd64/')"
+
+      - name: Publish package
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: '${{ needs.init.outputs.release-tag }}'
+          files: 'dist/*'
+
+  ubuntu-2404:
+    needs: init
+    runs-on: ubuntu-24.04
+    container:
+      image: ubuntu-24.04
+    steps:
+
+      - name: Checkout Git
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Enable apt source packages
+        run: |
+          sed -i 's/^Types: deb.*/Types: deb deb-src/g' /etc/apt/sources.list.d/ubuntu.sources
+
+      - name: Install build tools
+        run: |
+          apt update
+          apt install -y \
+            build-essential \
+            devscripts \
+            fakeroot \
+            quilt \
+            xfce4-dev-tools \
+            debhelper-compat \
+            libdrm-dev \
+            libepoxy-dev \
+            libgtk-3-dev \
+            libstartup-notification0-dev \
+            libwnck-3-dev \
+            libxcomposite-dev \
+            libxdamage-dev \
+            libxfce4ui-2-dev \
+            libxfce4util-dev \
+            libxfconf-0-dev \
+            libxfixes-dev \
+            libxft-dev \
+            libxpresent-dev \
+            libxrender-dev \
+            libxres-dev \
+            x11proto-present-dev
+
+      - name: Build package
+        run: |
+          ./build.sh
+          mkdir -p dist
+          file="$(find * -type f -name 'xfwm4_*_amd64.deb')"
+          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_ubuntu-2404_amd64/')"
 
       - name: Publish package
         uses: softprops/action-gh-release@v2
