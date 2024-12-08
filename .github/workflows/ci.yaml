@@ -1,11 +1,48 @@
 name: '🧑‍🏭'
+
 on:
   workflow_dispatch:
+
 permissions:
   contents: write
 
 jobs:
-  job:
+
+  init:
+    runs-on: ubuntu-24.04
+    steps:
+
+      - name: Checkout Git
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find release tag
+        run: echo "RELEASE_TAG=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Create release tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ env.RELEASE_TAG }}',
+              sha: context.sha
+            })
+
+      - name: Find xfwm version
+        run: echo "XFWM_VERSION=$(cat build.sh | grep -oP 'ver="(\K[0-9\.]+)')" >> $GITHUB_ENV
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: '${{ env.XFWM_VERSION }}'
+          tag_name: '${{ env.RELEASE_TAG }}'
+          body: 'xfwm v${{ env.XFWM_VERSION }} (Debian 12)'
+
+  debian:
+    needs: init
     runs-on: ubuntu-24.04
     container:
       image: debian:12-slim
@@ -50,34 +87,11 @@ jobs:
         run: |
           ./build.sh
           mkdir -p dist
-          mv xfwm4_*_amd64.deb dist/
+          file="$(find * -type f -name 'xfwm4_*_amd64.deb')"
+          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_debian_amd64/')"
 
-      - name: Create checksums
-        run: |
-          cd dist
-          sha256sum * > checksums.txt
-
-      - name: Find release tag
-        run: echo "TAG=$(date +%s)" >> $GITHUB_ENV
-
-      - name: Create release tag
-        uses: actions/github-script@v5
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/${{ env.TAG }}',
-              sha: context.sha
-            })
-
-      - name: Find release name
-        run: echo "XFWM_VERSION=$(cat build.sh | grep -oP 'ver="(\K[0-9\.]+)')" >> $GITHUB_ENV
-
-      - name: Publish release
+      - name: Publish package
         uses: softprops/action-gh-release@v2
         with:
-          name: '${{ env.XFWM_VERSION }}'
-          tag_name: '${{ env.TAG }}'
-          body: 'xfwm v${{ env.XFWM_VERSION }} (Debian 12)'
+          tag_name: '${{ env.RELEASE_TAG }}'
           files: 'dist/*'
