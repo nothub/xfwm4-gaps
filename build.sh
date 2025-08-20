@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-ver="4.18.0"
+ver="4.20.0"
 
 set -eu
 cd "$(dirname "$(realpath "$0")")"
