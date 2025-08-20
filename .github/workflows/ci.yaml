@@ -103,11 +103,11 @@ jobs:
           tag_name: '${{ needs.init.outputs.release-tag }}'
           files: 'dist/*'
 
-  ubuntu-2404:
+  ubuntu-2504:
     needs: init
     runs-on: ubuntu-24.04
     container:
-      image: ubuntu:24.04
+      image: ubuntu:25.04
     steps:
 
       - name: Checkout Git
@@ -151,7 +151,7 @@ jobs:
           ./build.sh
           mkdir -p dist
           file="$(find * -type f -name 'xfwm4_*_amd64.deb')"
-          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_ubuntu-2404_amd64/')"
+          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_ubuntu-2504_amd64/')"
 
       - name: Publish package
         uses: softprops/action-gh-release@v2
