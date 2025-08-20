@@ -48,11 +48,11 @@ jobs:
           body: |
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-  debian-12:
+  debian-13:
     needs: init
     runs-on: ubuntu-24.04
     container:
-      image: debian:12-slim
+      image: debian:13-slim
     steps:
 
       - name: Checkout Git
@@ -95,7 +95,7 @@ jobs:
           ./build.sh
           mkdir -p dist
           file="$(find * -type f -name 'xfwm4_*_amd64.deb')"
-          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_debian-12_amd64/')"
+          cp "${file}" "dist/$(echo "${file}" | sed 's/_amd64/_debian-13_amd64/')"
 
       - name: Publish package
         uses: softprops/action-gh-release@v2
