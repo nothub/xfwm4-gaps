@@ -6,11 +6,12 @@ set -eu
 cd "$(dirname "$(realpath "$0")")"
 set -x
 
+apt-get update
 apt-get source "xfwm4=${ver}"
 
 mkdir -p "xfwm4-${ver}/debian/patches"
-cp gaps.patch "xfwm4-${ver}/debian/patches/"
-echo "gaps.patch" >> "xfwm4-${ver}/debian/patches/series"
+cp "gaps_${ver}.patch" "xfwm4-${ver}/debian/patches/"
+echo "gaps_${ver}.patch" >> "xfwm4-${ver}/debian/patches/series"
 
 cd "xfwm4-${ver}"
 
